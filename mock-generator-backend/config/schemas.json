@@ -1,0 +1,40 @@
+{
+  "schemas": [
+    {
+      "id": "schema_1754536232834",
+      "name": "custom",
+      "resourceName": "custom",
+      "schema": {
+        "name": "@name",
+        "info": {
+          "emil": "@email",
+          "status": "@boolean"
+        },
+        "age": "@integer(1,100)"
+      },
+      "count": 5,
+      "createdAt": "2025-08-07T03:10:32.834Z",
+      "updatedAt": "2025-08-07T03:27:35.160Z"
+    },
+    {
+      "id": "schema_1754545901269",
+      "name": "test",
+      "resourceName": "test",
+      "schema": {
+        "a": "@string"
+      },
+      "count": 10,
+      "createdAt": "2025-08-07 13:51:41",
+      "updatedAt": "2025-08-07 13:51:41"
+    },
+    {
+      "id": "schema_1754545936165",
+      "name": "test2",
+      "resourceName": "test2",
+      "schema": {},
+      "count": 10,
+      "createdAt": "2025-08-07 13:52:16",
+      "updatedAt": "2025-08-07 13:52:16"
+    }
+  ]
+}
