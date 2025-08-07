@@ -238,41 +238,20 @@ export const getData = async (req, res) => {
     if (!schema) {
       return res.status(404).json({ error: 'Schema不存在' });
     }
+    //直接请求jsonServer的接口 地址为 `${process.env.API_URL}/${schema.resourceName}
+    let url  = `http://localhost:${process.env.PORT}${process.env.API_URL}/${schema.resourceName}`
+    // 如果有查询参数，添加到URL中
+    const queryParams = { ...req.query };
+    // 移除id参数（因为id是路径参数）
+    delete queryParams.id;
 
-    const currentDb = router.db.getState();
-    const data = currentDb[schema.resourceName] || [];
-
-    // 检查是否有分页参数
-    const hasPagination = req.query.page || req.query.pageSize;
-
-    if (hasPagination) {
-      // 获取分页参数
-      const page = parseInt(req.query.page) || 1;
-      const pageSize = parseInt(req.query.pageSize) || 10;
-
-      // 计算分页索引
-      const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-
-      // 分页数据
-      const paginatedData = data.slice(startIndex, endIndex);
-
-      // 计算总页数
-      const totalPages = Math.ceil(data.length / pageSize);
-
-      res.json({
-        data: paginatedData,
-        pagination: {
-          total: data.length,
-          page,
-          pageSize,
-          totalPages
-        }
-      });
-    } else {
-      // 没有分页参数时返回所有数据
-      res.json(data);
+    if (Object.keys(queryParams).length > 0) {
+      const searchParams = new URLSearchParams(queryParams);
+      url += `?${searchParams}`;
     }
+    const response = await fetch(url);
+    const data = await response.json();
+    res.json(data);
   } catch (error) {
     res.status(500).json({ error: '获取数据失败: ' + error.message });
   }

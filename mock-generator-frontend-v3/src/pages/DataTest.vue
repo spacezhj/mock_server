@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import {ref, onMounted, computed, watchEffect} from 'vue'
 import { ElTable, ElTableColumn, ElButton, ElSelect, ElOption, ElInputNumber, ElMessage, ElTabs, ElTabPane,ElAlert } from 'element-plus'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
@@ -40,20 +40,20 @@ const fetchSchemas = async () => {
 // 获取测试数据
 const fetchData = async (id) => {
   if (!id) {
-    ElMessage.warning('请先选择Schema')
+    // ElMessage.warning('请先选择Schema')
     return
   }
 
   loading.value = true
   try {
-    const response = await getSchemaData(id,{
+    const {data:list,pagination} = await getSchemaData(id,{
       page: currentPage.value,
       pageSize: pageSize.value
     })
-    data.value = response.data
-    total.value = response.data.length
+    data.value = list
+    total.value = pagination.total
     // 格式化JSON数据用于展示
-    jsonData.value = JSON.stringify(response.data.slice(0, count.value), null, 2)
+    jsonData.value = JSON.stringify(list, null, 2)
   } catch (error) {
     ElMessage.error('获取数据失败: ' + error.message)
     console.error('获取数据失败:', error)
@@ -78,6 +78,11 @@ const handlePageChange = (currentPageVal) => {
 const handleSizeChange = (pageSizeVal) => {
   pageSize.value = pageSizeVal
 }
+//监听分页参数的变化
+watchEffect(()=>{
+  fetchData(selectedSchema.value.id||schemaId.value)
+})
+
 
 // 处理Schema选择变化
 const handleSchemaChange = (id) => {
@@ -150,6 +155,7 @@ onMounted(() => {
         <el-select
           v-model="selectedSchema.id"
           placeholder="请选择Schema"
+          :disabled="!!schemaId"
           style="width: 300px; margin-right: 10px"
           @change="handleSchemaChange"
         >

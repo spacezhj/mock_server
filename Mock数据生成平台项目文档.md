@@ -167,7 +167,7 @@ graph TD
 
 #### 路由代理机制
 ```javascript
-// server/middleware/jsonServerProxy.js
+// server/middleware/jsonServerUse.js
 const jsonServer = require('json-server');
 const router = jsonServer.router('config/db.json');
 

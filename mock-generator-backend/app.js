@@ -4,7 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
-import jsonServerProxy from './middleware/jsonServerProxy.js';
 
 // 加载环境变量
 dotenv.config();
@@ -13,6 +12,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// 创建express应用用于处理API和其他路由
 const app = express();
 
 // 配置中间件
@@ -26,11 +26,8 @@ app.use(express.static(staticPath));
 // 配置API路由
 app.use('/api', apiRoutes);
 
-// 配置JSON-Server代理
-jsonServerProxy(app);
-
 // 对于SPA应用，将所有非API、非mock路由都指向index.html
-app.get(/^\/(?!mock|api).*$/, (req, res) => {
+app.get(/^\/(?!api|mock).*$/, (req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
 
