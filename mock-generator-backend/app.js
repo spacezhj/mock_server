@@ -2,9 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
 import jsonServerProxy from './middleware/jsonServerProxy.js';
 
+// 加载环境变量
+dotenv.config();
+
+// 获取当前文件的目录名
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -15,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 // 提供前端打包后的静态文件服务
-const staticPath = path.join(__dirname, '../mock-generator-frontend-v3/dist');
+const staticPath = path.join(__dirname, process.env.FRONTEND_DIST_PATH || '../mock-generator-frontend-v3/dist');
 app.use(express.static(staticPath));
 
 // 配置API路由

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { ElCard, ElButton, ElRow, ElCol, ElIcon } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { Coin} from '@element-plus/icons-vue'
+import { Coin,Box,MessageBox} from '@element-plus/icons-vue'
 
 const router = useRouter()
 </script>
@@ -26,7 +26,7 @@ const router = useRouter()
           <div class="card-content">
             <el-icon class="icon"><Coin /></el-icon>
             <h3>Schema管理</h3>
-            <p>创建、编辑和管理您的数据模型</p>
+            <p>管理您的数据模型</p>
             <ElButton type="primary" size="small" style="margin-top: 10px;">进入管理</ElButton>
           </div>
         </el-card>
@@ -35,7 +35,7 @@ const router = useRouter()
       <el-col :span="8">
         <el-card class="function-card" @click="router.push({ name: 'createSchema' })">
           <div class="card-content">
-            <el-icon class="icon"><Coin /></el-icon>
+            <el-icon class="icon"><Box /></el-icon>
             <h3>新建Schema</h3>
             <p>设计您的自定义数据结构</p>
             <ElButton type="primary" size="small" style="margin-top: 10px;">开始创建</ElButton>
@@ -46,9 +46,9 @@ const router = useRouter()
       <el-col :span="8">
         <el-card class="function-card" @click="router.push({ name: 'dataTest' })">
           <div class="card-content">
-            <el-icon class="icon"><Coin /></el-icon>
+            <el-icon class="icon"><MessageBox /></el-icon>
             <h3>数据测试</h3>
-            <p>查看和测试生成的Mock数据</p>
+            <p>测试生成的Mock数据</p>
             <ElButton type="primary" size="small" style="margin-top: 10px;">开始测试</ElButton>
           </div>
         </el-card>
@@ -89,6 +89,10 @@ const router = useRouter()
   padding: 30px 0;
 }
 
+p{
+  /*禁止换行*/
+  white-space: nowrap;
+}
 .icon {
   font-size: 48px;
   color: #409eff;

@@ -26,15 +26,6 @@
       "count": 10,
       "createdAt": "2025-08-07 13:51:41",
       "updatedAt": "2025-08-07 13:51:41"
-    },
-    {
-      "id": "schema_1754545936165",
-      "name": "test2",
-      "resourceName": "test2",
-      "schema": {},
-      "count": 10,
-      "createdAt": "2025-08-07 13:52:16",
-      "updatedAt": "2025-08-07 13:52:16"
     }
   ]
 }

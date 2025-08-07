@@ -1,14 +1,16 @@
 import axios from 'axios'
 
-export const BASE = "http://localhost:3000"
-// 创建axios实例
-const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  timeout: 5000
+// 从环境变量获取API基础路径
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+
+// 创建API实例
+const apiClient = axios.create({
+  baseURL: API_BASE_URL+"/api",
+  timeout: 10000
 })
 
 // 请求拦截器
-api.interceptors.request.use(
+apiClient.interceptors.request.use(
   config => {
     // 可以在这里添加请求头，如token等
     return config
@@ -20,7 +22,7 @@ api.interceptors.request.use(
 )
 
 // 响应拦截器
-api.interceptors.response.use(
+apiClient.interceptors.response.use(
   response => {
     return response.data
   },
@@ -31,4 +33,4 @@ api.interceptors.response.use(
   }
 )
 
-export default api
+export default apiClient

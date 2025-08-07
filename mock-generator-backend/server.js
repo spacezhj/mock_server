@@ -1,3 +1,6 @@
+// 加载环境变量
+import dotenv from 'dotenv';
+dotenv.config();
 
 // 导入app实例
 import app from './app.js';

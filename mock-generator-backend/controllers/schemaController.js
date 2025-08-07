@@ -1,12 +1,15 @@
 import jsonServer from 'json-server';
 import mockService from '../services/mockService.js';
 import day from 'dayjs';
-import { recreateRouter } from '../middleware/jsonServerProxy.js';
+import dotenv from 'dotenv';
 const router =jsonServer.router('config/db.json');
+
+// 加载环境变量
+dotenv.config();
 
 // 导入lowdb
 import { Low, JSONFileSync } from 'lowdb';
-const adapter = new JSONFileSync('config/schemas.json');
+const adapter = new JSONFileSync(process.env.SCHEMAS_PATH || 'config/schemas.json');
 const db = new Low(adapter);
 
 // 初始化函数
@@ -71,7 +74,7 @@ export const create = async (req, res) => {
 
     res.status(201).json({
       ...newSchema,
-      endpoint: `/mock/${resourceName}`
+      endpoint: `${process.env.API_URL}/${resourceName}`
     });
   } catch (error) {
     console.error('生成数据失败:', error);
@@ -93,7 +96,7 @@ export const getAll = async (req, res) => {
     const schemas = (database.data.schemas || []).map((t)=>{
       return {
         ...t,
-        endpoint: `/mock/${t.resourceName}`
+        endpoint: `${process.env.API_URL}/${t.resourceName}`
       }
     })
     if(hasPagination){
@@ -191,7 +194,7 @@ export const update = async (req, res) => {
 
     res.json({
       ...updatedSchema,
-      endpoint: `/mock/${resourceName}`
+      endpoint: `${process.env.API_URL}/${resourceName}`
     });
   } catch (error) {
     res.status(500).json({ error: '更新数据失败: ' + error.message });

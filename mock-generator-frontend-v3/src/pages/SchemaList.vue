@@ -1,9 +1,19 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { ElTable, ElTableColumn, ElButton, ElDialog, ElMessage, ElPagination, ElInput, ElSelect, ElOption } from 'element-plus'
-import { useRouter } from 'vue-router'
-import { getSchemas, deleteSchema as deleteSchemaApi } from '../services/schemaService'
-import {BASE} from "../services/api.js";
+import {ref, onMounted, computed} from 'vue'
+import {
+  ElTable,
+  ElTableColumn,
+  ElButton,
+  ElDialog,
+  ElMessage,
+  ElPagination,
+  ElInput,
+  ElSelect,
+  ElOption
+} from 'element-plus'
+import {useRouter} from 'vue-router'
+import {getSchemas, deleteSchema as deleteSchemaApi} from '../services/schemaService'
+import {API_BASE_URL} from "../services/api.js";
 
 const router = useRouter()
 const schemas = ref([])
@@ -81,12 +91,12 @@ const handleSizeChange = (pageSizeVal) => {
 
 // 编辑Schema
 const editSchema = (id) => {
-  router.push({ name: 'editSchema', params: { id } })
+  router.push({name: 'editSchema', params: {id}})
 }
 
 // 查看Schema数据
 const viewSchemaData = (id) => {
-  router.push({ name: 'dataTest', query: { schemaId: id } })
+  router.push({name: 'dataTest', query: {schemaId: id}})
 }
 
 onMounted(() => {
@@ -100,55 +110,64 @@ onMounted(() => {
       <template #header>
         <div class="card-header">
           <span>Schema管理</span>
-          <el-button
-            type="primary"
-            size="small"
-            @click="router.push({ name: 'createSchema' })"
-          >
-            新建Schema
-          </el-button>
+          <div class="flex">
+            <el-button
+                type="primary"
+                size="small"
+                @click="router.push({ name: 'createSchema' })"
+            >
+              新建Schema
+            </el-button>
+            <el-button
+                type="primary"
+                size="small"
+                @click="router.push('/')"
+            >
+              返回首页
+            </el-button>
+          </div>
         </div>
       </template>
 
       <el-table
-        v-loading="loading"
-        :data="schemas"
-        style="width: 100%"
-        border
+          v-loading="loading"
+          :data="schemas"
+          style="width: 100%;max-height: 400px"
+          border
       >
-        <el-table-column prop="id" label="ID" width="80"  show-overflow-tooltip/>
-        <el-table-column prop="name" label="名称" width="180" />
-        <el-table-column prop="resourceName" label="资源名称" width="180" />
-        <el-table-column prop="endpoint" label="资源请求接口" width="180" >
+        <el-table-column prop="id" label="ID" width="80" show-overflow-tooltip/>
+        <el-table-column prop="name" label="名称" width="180"/>
+        <el-table-column prop="resourceName" label="资源名称" width="180"/>
+        <el-table-column prop="endpoint" label="资源请求接口" width="180">
           <template #default="{ row }">
-            <el-link :href="BASE+row.endpoint" target="_blank">{{ row.endpoint }}</el-link>
+            <el-link :href="API_BASE_URL+row.endpoint" target="_blank">{{ row.endpoint }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="count" label="数据条数" width="100" />
-        <el-table-column prop="createdAt" label="创建时间" width="180" />
-        <el-table-column prop="updatedAt" label="更新时间" width="180" />
+        <el-table-column prop="count" label="数据条数" width="100"/>
+        <el-table-column prop="createdAt" label="创建时间" width="180"/>
+        <el-table-column prop="updatedAt" label="更新时间" width="180"/>
         <el-table-column label="操作" width="240" fixed="right">
           <template #default="{ row }">
             <el-button
-              type="primary"
-              size="small"
-              @click="viewSchemaData(row.id)"
-              style="margin-right: 5px"
+                type="primary"
+                size="small"
+                @click="viewSchemaData(row.id)"
+                style="margin-right: 5px"
             >
               测试数据
             </el-button>
             <el-button
-              type="success"
-              size="small"
-              @click="editSchema(row.id)"
-              style="margin-right: 5px"
+                type="success"
+                size="small"
+                @click="editSchema(row.id)"
+                style="margin-right: 5px"
             >
               编辑
             </el-button>
             <el-button
-              type="danger"
-              size="small"
-              @click="() => {
+                type="danger"
+                size="small"
+                @click="() => {
                 schemaToDelete = row
                 deleteDialogVisible = true
               }"
@@ -161,23 +180,23 @@ onMounted(() => {
 
       <div class="pagination-container">
         <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="[5, 10, 20, 50]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          @size-change="handleSizeChange"
-          @current-change="handlePageChange"
+            v-model:current-page="currentPage"
+            v-model:page-size="pageSize"
+            :page-sizes="[5, 10, 20, 50]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handlePageChange"
         />
       </div>
     </el-card>
 
     <!-- 删除确认对话框 -->
     <el-dialog
-      v-model="deleteDialogVisible"
-      title="确认删除"
-      width="30%"
-      :before-close="() => { deleteDialogVisible = false }"
+        v-model="deleteDialogVisible"
+        title="确认删除"
+        width="30%"
+        :before-close="() => { deleteDialogVisible = false }"
     >
       <span>确定要删除Schema <strong>{{ schemaToDelete?.name }}</strong> 吗？此操作不可撤销。</span>
       <template #footer>
@@ -191,7 +210,8 @@ onMounted(() => {
 .schema-list-container {
   padding: 20px;
   background-color: #f5f7fa;
-  min-height: calc(100vh - 64px);
+  /*min-height: calc(100vh - 64px);*/
+  height: 80vh;
 }
 
 .card-header {

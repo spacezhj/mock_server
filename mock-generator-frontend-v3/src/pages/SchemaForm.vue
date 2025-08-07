@@ -454,7 +454,7 @@ onUnmounted(() => {
           :model="form"
           :rules="formRules"
           ref="formRef"
-          label-width="100px"
+          label-width="120px"
       >
         <el-form-item label="Schema名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入Schema名称"/>
