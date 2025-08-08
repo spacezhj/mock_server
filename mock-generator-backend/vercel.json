@@ -17,10 +17,22 @@
         "DELETE",
         "PATCH"
       ]
+    },
+    {
+      "src": "/api/schemas.*",
+      "dest": "server.js"
+    },
+    {
+      "src": "/mock/.*",
+      "dest": "server.js"
+    },
+    {
+      "src": "/health",
+      "dest": "server.js"
     }
   ],
   "env": {
-    "PORT":"8080",
+    "PORT":"3000",
     "DB_PATH":"./config/db.json",
     "SCHEMAS_PATH":"./config/schemas.json",
     "API_URL":"/mock",
