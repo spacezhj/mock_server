@@ -20,7 +20,7 @@
     }
   ],
   "env": {
-    "PORT":8080,
+    "PORT":"8080",
     "DB_PATH":"config/db.json",
     "SCHEMAS_PATH":"config/schemas.json",
     "API_URL":"/mock",
