@@ -24,7 +24,7 @@
     "DB_PATH":"config/db.json",
     "SCHEMAS_PATH":"config/schemas.json",
     "API_URL":"/mock",
-    "DELAY":100,
+    "DELAY":"100",
     "FRONTEND_DIST_PATH":"../mock-generator-frontend-v3/dist"
   }
 }
