@@ -3,9 +3,8 @@
   "name": "mock-generator-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "build:frontend": "cd ../mock-generator-frontend-v3 && npm run build",
     "serve": "npm run build:frontend && npm start"
